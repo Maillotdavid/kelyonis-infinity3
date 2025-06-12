@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelyonis Quantum Core</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Bienvenue dans Kelyonis Quantum Core</h1>
+    <p>Interface ultra-optimisée IA personnelle</p>
+    <button onclick="startVoice()">🎤 Commande vocale</button>
+    <div id="output"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin-top: 20px;
+  background: #0f0;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+#output {
+  margin-top: 30px;
+  width: 80%;
+  max-width: 600px;
+  word-wrap: break-word;
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
+}
+function startVoice() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'fr-FR';
+  recognition.onresult = function(event) {
+    const text = event.results[0][0].transcript;
+    document.getElementById("output").innerText = "Commande reçue : " + text;
+    processCommand(text);
+  };
+  recognition.start();
+}
+
+function processCommand(cmd) {
+  // Commandes simples – tu pourras les étendre à volonté
+  const output = document.getElementById("output");
+  if (cmd.toLowerCase().includes("image")) {
+    output.innerText += "\n🖼️ Génération d'image IA activée";
+  } else if (cmd.toLowerCase().includes("musique")) {
+    output.innerText += "\n🎵 Génération de musique IA activée";
+  } else {
+    output.innerText += "\n⏳ Traitement en cours par Kelyonis...";
+  }
+}
